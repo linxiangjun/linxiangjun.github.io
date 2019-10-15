@@ -18,8 +18,8 @@
   
   <entry>
     <title>React Hooks技术最佳实践（一）</title>
-    <link href="http://www.linxiangjun.com/2019/10/15/react-hooks-best-practices-1/"/>
-    <id>http://www.linxiangjun.com/2019/10/15/react-hooks-best-practices-1/</id>
+    <link href="http://www.linxiangjun.com/react-hooks-best-practices-1.html"/>
+    <id>http://www.linxiangjun.com/react-hooks-best-practices-1.html</id>
     <published>2019-10-15T02:12:14.000Z</published>
     <updated>2019-10-15T02:14:43.237Z</updated>
     
@@ -43,8 +43,8 @@
   
   <entry>
     <title>Memoization技术在React中的应用</title>
-    <link href="http://www.linxiangjun.com/2019/09/26/memoization-in-react/"/>
-    <id>http://www.linxiangjun.com/2019/09/26/memoization-in-react/</id>
+    <link href="http://www.linxiangjun.com/memoization-in-react.html"/>
+    <id>http://www.linxiangjun.com/memoization-in-react.html</id>
     <published>2019-09-26T12:35:42.000Z</published>
     <updated>2019-09-26T12:57:30.567Z</updated>
     
@@ -68,8 +68,8 @@
   
   <entry>
     <title>使用React Hook实现Redux状态机</title>
-    <link href="http://www.linxiangjun.com/2019/09/13/react-hook-acheieve-redux/"/>
-    <id>http://www.linxiangjun.com/2019/09/13/react-hook-acheieve-redux/</id>
+    <link href="http://www.linxiangjun.com/react-hook-acheieve-redux.html"/>
+    <id>http://www.linxiangjun.com/react-hook-acheieve-redux.html</id>
     <published>2019-09-13T10:59:48.000Z</published>
     <updated>2019-09-13T11:05:54.968Z</updated>
     
@@ -96,8 +96,8 @@
   
   <entry>
     <title>Reselect源码解析</title>
-    <link href="http://www.linxiangjun.com/2019/09/03/reselect-source-code/"/>
-    <id>http://www.linxiangjun.com/2019/09/03/reselect-source-code/</id>
+    <link href="http://www.linxiangjun.com/reselect-source-code.html"/>
+    <id>http://www.linxiangjun.com/reselect-source-code.html</id>
     <published>2019-09-03T13:42:46.000Z</published>
     <updated>2019-09-05T11:43:26.944Z</updated>
     

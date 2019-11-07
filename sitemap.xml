@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.linxiangjun.com/react-hooks-best-practices-2.html</loc>
+    
+    <lastmod>2019-11-07T05:02:22.286Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.linxiangjun.com/react-hooks-best-practices-1.html</loc>
     
     <lastmod>2019-10-15T02:14:43.237Z</lastmod>

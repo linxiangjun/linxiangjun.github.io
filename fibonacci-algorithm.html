@@ -1,0 +1,88 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="从斐波那契数列看两种常用算法和优化"><meta name="keywords" content="算法系列"><meta name="author" content="linxiangjun"><meta name="copyright" content="linxiangjun"><title>从斐波那契数列看两种常用算法和优化 | Code Charm</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">1.</span> <span class="toc-text">参考</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://raw.githubusercontent.com/linxiangjun/ablum/master/blog-img/me.png"></div><div class="author-info__name text-center">linxiangjun</div><div class="author-info__description text-center"></div><div class="follow-button"><a href="https://github.com/linxiangjun">Follow me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">8</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">3</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">3</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://s2.ax1x.com/2019/09/05/nmpXAH.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Code Charm</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">从斐波那契数列看两种常用算法和优化</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-04-07</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/算法系列/">算法系列</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>欢迎关注我：<a href="https://github.com/linxiangjun" target="_blank" rel="noopener">Github</a></p>
+<p><strong>斐波拉契数列</strong>是一个非常经典的数学概念，早在 1202 年就由意大利数学家 Leonardo Fibonacci 提出。它的递推方法定义为：<strong>F(1) = 1, F(2) = 1, F(n) = F(n - 1) + F(n - 2)（n ≥ 3，n ∈ N*）</strong>。本文主要从<strong>递归、递推</strong>两种算法以及<strong>记忆化</strong>和<strong>函数尾调用优化</strong>两种优化方式来探讨它的解法。</p>
+<p><strong>递归算法</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fib = <span class="function"><span class="keyword">function</span> (<span class="params">N</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (N &lt;= <span class="number">1</span>) <span class="keyword">return</span> N;</span><br><span class="line">  <span class="keyword">return</span> fib(N - <span class="number">1</span>) + fib(N - <span class="number">2</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>递归算法英文为 recursion algorithm，是一种直接或者间接调用自身函数或者方法的算法。递归算法的实质是把问题分解成规模缩小的同类问题的子问题，然后递归调用方法来表示问题的解。</p>
+<p><strong>递归算法解决问题的特点：</strong></p>
+<ul>
+<li>递归就是方法里调用自身。</li>
+<li>在使用递增归策略时，必须有一个明确的递归结束条件，称为递归出口。</li>
+<li>递归算法解题通常显得很简洁，但递归算法解题的运行效率较低。所以一般不提倡用递归算法设计程序。</li>
+<li>在递归调用的过程当中系统为每一层的返回点、局部量等开辟了栈来存储。递归次数过多容易造成栈溢出等，所以一般不提倡用递归算法设计程序。</li>
+</ul>
+<p>上面的算法的递归出口是 <code>if (N &lt;= 1) return N</code>，表示 fib 的第一个和第二位分别是从 0 和 1 开始计算。假设我们使用此算法求解 <code>N</code> 为 3 时 fib 的值，则递归过程如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fib(3)返回fib(2)和fib(1)相加的结果</span></span><br><span class="line">fib(<span class="number">3</span>) = fib(<span class="number">2</span>) + fib(<span class="number">1</span>);</span><br><span class="line"><span class="comment">// fib(2)返回fib(1)和fib(0)相加的结果</span></span><br><span class="line">fib(<span class="number">2</span>) = fib(<span class="number">1</span>) + fib(<span class="number">0</span>);</span><br><span class="line"><span class="comment">// fib(1)和fib(0)触发递归出口的条件，分别返回1和0</span></span><br><span class="line">fib(<span class="number">1</span>) = <span class="number">1</span>;</span><br><span class="line">fib(<span class="number">0</span>) = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<p>通过上面的递归过程，<code>fib(3)</code> 最终转换为<code>fib(1) + fib(0) + fib(1)</code>的求解。</p>
+<p>递归的效率并不是最优的，也可能导致栈溢出的问题。</p>
+<p>下面是 leetcode 执行用时和内存消耗：</p>
+<table>
+<thead>
+<tr>
+<th>执行用时</th>
+<th>内存消耗</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>80 ms</td>
+<td>34.7 MB</td>
+</tr>
+</tbody></table>
+<p><strong>函数尾调用优化</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fib = <span class="function"><span class="keyword">function</span> (<span class="params">N</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> calc(N, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> calc = <span class="function"><span class="keyword">function</span> (<span class="params">count, n, m</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (count === <span class="number">0</span>) <span class="keyword">return</span> n;</span><br><span class="line">  <span class="keyword">return</span> calc(count - <span class="number">1</span>, m, n + m);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>尾调用（Tail Call）是函数式编程的一个重要概念，是指一个函数里的最后一个动作是调用函数的情形，而函数尾优化就是通过尾调用来优化函数的栈空间大小。</p>
+<p>原理：函数调用时会内存形成一个调用帧（call frame），保存调用位置和内部变量等信息，如果函数本身存在递归调用函数的情况，那么所有的调用记录就会形成一个调用栈（call stack）。复杂的嵌套递归会占用大量的栈空间。当编译器检测到一个函数调用是尾递归的时候，它就覆盖当前的活动记录而不是在栈中去创建一个新的。通过覆盖当前的栈帧而不是在其之上重新添加一个，这样所使用的栈空间就大大缩减了，这使得实际的运行效率会变得更高。</p>
+<p>上面的代码都满足“最后一个动作是调用函数”这样一种情形，所以属于尾调用。区别于递归算法，函数尾调用优化将 <code>fib(0)</code> 和 <code>fib(1)</code> 的值作为参数默认值传递给了 <code>calc</code> 方法，并且将递归算法返回 <code>fib</code> 前两项相加的运算放在了函数参数中执行，这样就做到了函数尾调用优化。</p>
+<p>下面是 leetcode 执行结果：</p>
+<table>
+<thead>
+<tr>
+<th>执行用时</th>
+<th>内存消耗</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>64 ms</td>
+<td>34.3 MB</td>
+</tr>
+</tbody></table>
+<p><strong>记忆化</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fib = <span class="function"><span class="keyword">function</span> (<span class="params">N</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> memo(N);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">memo</span>(<span class="params">N, arr = []</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (N &lt;= <span class="number">1</span>) <span class="keyword">return</span> N;</span><br><span class="line">  <span class="keyword">if</span> (!arr[N]) arr[N] = memo(N - <span class="number">1</span>) + memo(N - <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">return</span> arr[N];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在递归算法时，存在着重复计算的问题，比如求解 <code>fib(4)</code> 时，会将 <code>fib(2)</code> 重复计算两次。虽然在 <code>N</code> 很小时不会造成特别大的性能损耗，而且可能还优于记忆化（记忆化要开辟新的空间存储已计算过的值），不过在处理大数据时记忆化的优势就显示出来了。</p>
+<p>上面代码新增一个 <code>arr</code> 数组来存储计算结果，如果 <code>arr</code> 中已经存储了对应的值，则不再重复计算，直接返回存储的结果。</p>
+<p>其实，相对于记忆化，有一个更优的算法来求解斐波拉契数列，那就是递推。</p>
+<p><strong>递推</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fib = <span class="function"><span class="keyword">function</span> (<span class="params">N</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (N &lt;= <span class="number">1</span>) <span class="keyword">return</span> N;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> arr = [];</span><br><span class="line">  arr[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">  arr[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">2</span>; i &lt;= N; i++) &#123;</span><br><span class="line">    arr[i] = arr[i - <span class="number">1</span>] + arr[i - <span class="number">2</span>];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr[N];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>递推（The Recursive）是给定一组初始值，然后根据规定运算，并最终得到所需结果。如果说递归是从<strong>未知到已知</strong>，那么递推就是<strong>从已知到未知</strong>。</p>
+<p>递推更加符合人类的思维习惯，从 <code>fib(0)</code> 和 <code>fib(1)</code> 可以计算出 <code>fib(2)</code> 的值，而知道了 <code>fib(1)</code> 和 <code>fib(2)</code> 的值，又可以计算出 <code>fib(3)</code> 的值。以此类推，可以计算出所有值的结果。相对于递归，递推不会出现重复计算的问题，在运行效率上更优。</p>
+<p>下面是 leetcode 执行结果：</p>
+<table>
+<thead>
+<tr>
+<th>执行用时</th>
+<th>内存消耗</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>56 ms</td>
+<td>33.5 MB</td>
+</tr>
+</tbody></table>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://chenqx.github.io/2014/09/29/Algorithm-Recursive-Programming/" target="_blank" rel="noopener">递归算法详解</a></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">linxiangjun</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://www.linxiangjun.com/fibonacci-algorithm.html">http://www.linxiangjun.com/fibonacci-algorithm.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/算法系列/">算法系列</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/react-draggable-layer.html"><span>基于TypeScript与React Hooks开发的通用组件库</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://s2.ax1x.com/2019/09/05/nmpXAH.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2020 By linxiangjun</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>

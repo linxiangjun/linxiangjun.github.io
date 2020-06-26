@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.linxiangjun.com/react-render-source.html</loc>
+    
+    <lastmod>2020-06-26T06:30:25.367Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.linxiangjun.com/fibonacci-algorithm.html</loc>
     
     <lastmod>2020-04-08T11:02:39.238Z</lastmod>
